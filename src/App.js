@@ -1,5 +1,5 @@
 import './App.css';
-import Canvas from './Canvas';
+import Canvas from './model/Canvas';
 
 function App() {
   return (
@@ -7,7 +7,7 @@ function App() {
       width="501"
       height="501"
       color="red"
-      image="https://placehold.it/501x501"
+      image="http://petrlhotsky.wz.cz/falls.jpg"
       grid="3">
     </Canvas>
   )
