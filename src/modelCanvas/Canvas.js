@@ -1,5 +1,5 @@
 import React from 'react';
-import Tile from './Tile';
+import CanvasTile from './CanvasTile';
 
 class Canvas extends React.Component {
     constructor(props) {
@@ -58,7 +58,7 @@ class Canvas extends React.Component {
 
         for (let y = 0; y < this.grid; y++)
             for (let x = 0; x < this.grid; x++)
-                this.tiles.push(new Tile({
+                this.tiles.push(new CanvasTile({
                     x: x * partWidth,
                     y: y * partHeight,
                     width: partWidth,

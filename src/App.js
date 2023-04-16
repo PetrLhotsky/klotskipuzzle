@@ -1,15 +1,15 @@
 import './App.css';
-import Canvas from './model/Canvas';
+import Puzzle from './modelPuzzle/Puzzle';
 
 function App() {
   return (
-    <Canvas
+    <Puzzle
       width="501"
       height="501"
       color="red"
       image="http://petrlhotsky.wz.cz/falls.jpg"
       grid="3">
-    </Canvas>
+    </Puzzle>
   )
 }
 

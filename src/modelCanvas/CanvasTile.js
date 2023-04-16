@@ -1,4 +1,4 @@
-class Tile {
+class CanvasTile {
     constructor(props) {
         this.state = {
             x: props.x,
@@ -13,4 +13,4 @@ class Tile {
     }
 }
 
-export default Tile
+export default CanvasTile
