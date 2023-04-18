@@ -1,4 +1,5 @@
 import './App.css';
+//import Canvas from './modelCanvas/Canvas';
 import Puzzle from './modelPuzzle/Puzzle';
 
 function App() {

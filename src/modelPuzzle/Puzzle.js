@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PuzzleTile from './PuzzleTile';
 
 class Puzzle extends React.Component {
@@ -8,8 +9,7 @@ class Puzzle extends React.Component {
         this.state = {
             width: props.width,
             height: props.height,
-            color: props.color,
-            order: []
+            color: props.color
         }
 
         this.image = new Image()
@@ -17,16 +17,15 @@ class Puzzle extends React.Component {
 
         this.grid = parseInt(props.grid)
         this.tiles = []
+        this.order = []
         this.missing = Math.floor(Math.random() * Math.pow(props.grid, 2))
 
         this.puzzleRef = React.createRef()
         this.generateTiles = this.generateTiles.bind(this)
         this.generateOrder = this.generateOrder.bind(this)
+        this.move = this.move.bind(this)
         this.click = this.click.bind(this)
         this.keyDown = this.keyDown.bind(this)
-
-        this.generateTiles()
-        this.generateOrder()
     }
 
     render() {
@@ -36,13 +35,6 @@ class Puzzle extends React.Component {
             backgroundColor: this.state.color
         }
 
-        console.log(this.tiles)
-        console.log(this.missing)
-
-        let partWidth = this.state.width / this.grid,
-            partHeight = this.state.height / this.grid,
-            parts = this.tiles.map((_, i) => this.tiles[this.state.order[i]].render(i, this.state.order[i] !== this.missing ? this.image.src : "", partWidth * (i % 3), partHeight * Math.floor(i / 3), partWidth, partHeight))
-
         return(
             <div
                 id="puzzle"
@@ -51,13 +43,21 @@ class Puzzle extends React.Component {
                 onClick={this.click}
                 onKeyDown={(e) => {this.keyDown(e)}}
                 tabIndex={0}>
-                    {parts}
             </div>
         )
     }
 
     componentDidMount() {
+        this.generateTiles()
+        this.generateOrder()
+
         this.puzzleRef.current.focus()
+
+        let partWidth = this.state.width / this.grid,
+            partHeight = this.state.height / this.grid,
+            parts = this.tiles.map((_, i) => this.tiles[this.order[i]].render(this.order[i], this.order[i] !== this.missing ? this.image.src : "", partWidth * (i % 3), partHeight * Math.floor(i / 3), partWidth, partHeight))
+        
+        ReactDOM.render(parts, document.querySelector("#puzzle"))
     }
 
     generateTiles() {
@@ -77,7 +77,7 @@ class Puzzle extends React.Component {
     generateOrder() {
         let numbers = Array.from({length: Math.pow(this.grid, 2)}, (_, i) => i)
         //this.randomizeOrder(numbers)
-        this.state.order.push(...numbers)
+        this.order.push(...numbers)
     }
 
     randomizeOrder(numbers) {
@@ -91,48 +91,53 @@ class Puzzle extends React.Component {
         }
     }
 
+    move(toMove1, toMove2) {
+        toMove1 += toMove2;
+
+        [this.order[toMove1], this.order[toMove2]] = [this.order[toMove2], this.order[toMove1]]
+
+        let nodes = document.querySelector("#puzzle").childNodes,
+            node1 = Object.assign({}, nodes[this.order[toMove1]].style),
+            node2 = Object.assign({}, nodes[this.order[toMove2]].style)
+
+        document.querySelector("#puzzle").childNodes[this.order[toMove1]].style.left = node2.left
+        document.querySelector("#puzzle").childNodes[this.order[toMove2]].style.left = node1.left
+
+        document.querySelector("#puzzle").childNodes[this.order[toMove1]].style.top = node2.top
+        document.querySelector("#puzzle").childNodes[this.order[toMove2]].style.top = node1.top
+    }
+
     click() {
         
     }
 
     keyDown(e) {
-        let index = parseInt(this.state.order.indexOf(this.missing)),
-            order = this.state.order
+        let index = parseInt(this.order.indexOf(this.missing))
 
         switch (e.which) {
             case 37:
             case 65:
-                if (index % this.grid !== this.grid - 1) {
-                    [order[index + 1], order[index]] = [order[index], order[index + 1]]
-                }
+                if (index % this.grid !== this.grid - 1) this.move(1, index)
                 break
             
             case 38:
             case 87:
-                if (Math.floor(index / 3) !== this.grid - 1) {
-                    [order[index + this.grid], order[index]] = [order[index], order[index + this.grid]]
-                }
+                if (Math.floor(index / 3) !== this.grid - 1) this.move(this.grid, index)
                 break
             
             case 39:
             case 68:
-                if (index % this.grid !== 0) {
-                    [order[index - 1], order[index]] = [order[index], order[index - 1]]
-                }
+                if (index % this.grid !== 0) this.move(-1, index)
                 break
             
             case 40:
             case 83:
-                if (Math.floor(index / 3) !== 0) {
-                    [order[index - this.grid], order[index]] = [order[index], order[index - this.grid]]
-                }
+                if (Math.floor(index / 3) !== 0) this.move(-this.grid, index)
                 break
             
             default:
                 break
         }
-
-        this.setState({order: order})
     }
 }
 

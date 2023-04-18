@@ -49,6 +49,7 @@ class Canvas extends React.Component {
 
         this.canvasRef.current.focus()
 
+        this.context = this.canvasRef.current.getContext("2d")
         this.redraw()
     }
 
@@ -83,8 +84,8 @@ class Canvas extends React.Component {
         }
     }
 
-    redraw() {
-        this.context = this.canvasRef.current.getContext("2d")
+    redraw(toMove1, toMove2) {
+        [this.order[toMove1 + toMove2], this.order[toMove2]] = [this.order[toMove2], this.order[toMove1 + toMove2]]
 
         let squareGrid = Math.pow(this.grid, 2),
             partWidth = this.state.width / this.grid,
@@ -107,37 +108,27 @@ class Canvas extends React.Component {
         switch (e.which) {
             case 37:
             case 65:
-                if (index % this.grid !== this.grid - 1) {
-                    [this.order[index + 1], this.order[index]] = [this.order[index], this.order[index + 1]]
-                }
+                if (index % this.grid !== this.grid - 1) this.redraw(1, index)
                 break
             
             case 38:
             case 87:
-                if (Math.floor(index / 3) !== this.grid - 1) {
-                    [this.order[index + this.grid], this.order[index]] = [this.order[index], this.order[index + this.grid]]
-                }
+                if (Math.floor(index / 3) !== this.grid - 1) this.redraw(this.grid, index)
                 break
             
             case 39:
             case 68:
-                if (index % this.grid !== 0) {
-                    [this.order[index - 1], this.order[index]] = [this.order[index], this.order[index - 1]]
-                }
+                if (index % this.grid !== 0) this.redraw(-1, index)
                 break
             
             case 40:
             case 83:
-                if (Math.floor(index / 3) !== 0) {
-                    [this.order[index - this.grid], this.order[index]] = [this.order[index], this.order[index - this.grid]]
-                }
+                if (Math.floor(index / 3) !== 0) this.redraw(-this.grid, index)
                 break
             
             default:
                 break
         }
-
-        this.redraw()
     }
 }
 

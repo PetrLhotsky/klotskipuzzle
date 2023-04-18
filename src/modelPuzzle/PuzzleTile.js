@@ -13,17 +13,16 @@ class PuzzleTile {
             position: "absolute",
             left: dX,
             top: dY,
-            width: dWidth,
-            height: dHeight,
+            width: this.state.width,
+            height: this.state.height,
             backgroundImage: "url(" + image + ")",
             backgroundPosition: "-" + this.state.x + "px -" + this.state.y + "px",
-            backrgounSize: dWidth + "px " + dHeight + "px",
+            backrgoundSize: dWidth + "px " + dHeight + "px",
             transition: "all 0.5s"
         }
 
         return (
             <div
-                key={key}
                 style={style}>
             </div>
         )
