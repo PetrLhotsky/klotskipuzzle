@@ -18,7 +18,8 @@ class Puzzle extends React.Component {
         this.grid = parseInt(props.grid)
         this.tiles = []
         this.order = []
-        this.missing = Math.floor(Math.random() * Math.pow(props.grid, 2))
+        this.missing = 0//Math.floor(Math.random() * Math.pow(props.grid, 2))
+        this.enabled = true
 
         this.puzzleRef = React.createRef()
         this.generateTiles = this.generateTiles.bind(this)
@@ -76,7 +77,7 @@ class Puzzle extends React.Component {
 
     generateOrder() {
         let numbers = Array.from({length: Math.pow(this.grid, 2)}, (_, i) => i)
-        //this.randomizeOrder(numbers)
+        this.randomizeOrder(numbers)
         this.order.push(...numbers)
     }
 
@@ -92,19 +93,21 @@ class Puzzle extends React.Component {
     }
 
     move(toMove1, toMove2) {
+        this.enabled = false
         toMove1 += toMove2;
 
         [this.order[toMove1], this.order[toMove2]] = [this.order[toMove2], this.order[toMove1]]
 
-        let nodes = document.querySelector("#puzzle").childNodes,
-            node1 = Object.assign({}, nodes[this.order[toMove1]].style),
-            node2 = Object.assign({}, nodes[this.order[toMove2]].style)
+        let node1 = window.getComputedStyle(document.querySelector("#tile" + this.order[toMove1])),
+            node2 = window.getComputedStyle(document.querySelector("#tile" + this.order[toMove2]))
 
-        document.querySelector("#puzzle").childNodes[this.order[toMove1]].style.left = node2.left
-        document.querySelector("#puzzle").childNodes[this.order[toMove2]].style.left = node1.left
+        document.querySelector("#tile" + this.order[toMove1]).style.left = node2.left
+        document.querySelector("#tile" + this.order[toMove2]).style.left = node1.left
 
-        document.querySelector("#puzzle").childNodes[this.order[toMove1]].style.top = node2.top
-        document.querySelector("#puzzle").childNodes[this.order[toMove2]].style.top = node1.top
+        document.querySelector("#tile" + this.order[toMove1]).style.top = node2.top
+        document.querySelector("#tile" + this.order[toMove2]).style.top = node1.top;
+
+        setTimeout(() => this.enabled = true, 500)
     }
 
     click() {
@@ -112,6 +115,8 @@ class Puzzle extends React.Component {
     }
 
     keyDown(e) {
+        if (!this.enabled) return
+
         let index = parseInt(this.order.indexOf(this.missing))
 
         switch (e.which) {

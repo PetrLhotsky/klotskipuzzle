@@ -23,6 +23,7 @@ class PuzzleTile {
 
         return (
             <div
+                id={"tile" + key}
                 style={style}>
             </div>
         )
