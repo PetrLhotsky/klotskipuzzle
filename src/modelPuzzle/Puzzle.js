@@ -115,28 +115,53 @@ class Puzzle extends React.Component {
     }
 
     keyDown(e) {
-        if (!this.enabled) return
-
-        let index = parseInt(this.order.indexOf(this.missing))
-
         switch (e.which) {
             case 37:
             case 65:
-                if (index % this.grid !== this.grid - 1) this.move(1, index)
+                this.gesture(0)
                 break
             
             case 38:
             case 87:
-                if (Math.floor(index / 3) !== this.grid - 1) this.move(this.grid, index)
+                this.gesture(3)
                 break
             
             case 39:
             case 68:
-                if (index % this.grid !== 0) this.move(-1, index)
+                this.gesture(1)
                 break
             
             case 40:
             case 83:
+                this.gesture(2)
+                break
+            
+            default:
+                break
+        }
+    }
+
+    gesture(which) {
+        if (!this.enabled) return
+
+        if (which < 0) return
+
+        let index = parseInt(this.order.indexOf(this.missing))
+
+        switch (which) {
+            case 0:
+                if (index % this.grid !== this.grid - 1) this.move(1, index)
+                break
+            
+            case 3:
+                if (Math.floor(index / 3) !== this.grid - 1) this.move(this.grid, index)
+                break
+            
+            case 1:
+                if (index % this.grid !== 0) this.move(-1, index)
+                break
+            
+            case 2:
                 if (Math.floor(index / 3) !== 0) this.move(-this.grid, index)
                 break
             

@@ -1,0 +1,27 @@
+html, body {
+    height: 100%
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flexbox-container {
+    display: flex;
+    column-gap: 100px;
+    align-items: center;
+}
+
+#puzzle {
+    position: relative;
+}
+
+p {
+    margin-top: 0.5rem;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
