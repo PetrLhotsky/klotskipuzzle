@@ -18,7 +18,7 @@ const URL = "https://teachablemachine.withgoogle.com/models/j1Ti1eTk2/",
       width = 501,
       height = 501,
       color = "#0d6efd",
-      image = "http://petrlhotsky.wz.cz/falls.jpg",
+      image = "/falls.jpg",
       grid = 3
 
 let puzzleRef, model, totalCases, webcam, labelContainer, lastIndex, counter
