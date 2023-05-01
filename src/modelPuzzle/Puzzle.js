@@ -18,7 +18,7 @@ class Puzzle extends React.Component {
         this.grid = parseInt(props.grid)
         this.tiles = []
         this.order = []
-        this.missing = 0//Math.floor(Math.random() * Math.pow(props.grid, 2))
+        this.missing = Math.floor(Math.random() * Math.pow(props.grid, 2))
         this.enabled = true
 
         this.puzzleRef = React.createRef()
