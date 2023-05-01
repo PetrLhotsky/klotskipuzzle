@@ -1,0 +1,1 @@
+jako model 6, ale s více samples s dalšími dvěma pozadími

@@ -1,0 +1,1 @@
+jako model 7, ale s 1000 průchody
