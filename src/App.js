@@ -8,7 +8,7 @@ const URL = // model1:  "https://teachablemachine.withgoogle.com/models/j1Ti1eTk
             // model3:  "https://teachablemachine.withgoogle.com/models/qz1fdqaVZ/",
             // model4:  "https://teachablemachine.withgoogle.com/models/OytAvKTzJE/",
             //          "https://teachablemachine.withgoogle.com/models/JaJKSjSyx/",
-                        "http://petrlhotsky.wz.cz/",
+                        "https://gray-plant-0fa53bc03.3.azurestaticapps.net/",
       modelFile = "model.json",
       metadataFile = "metadata.json",
       buttonName = "initButton",
