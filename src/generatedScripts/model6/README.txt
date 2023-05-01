@@ -1,0 +1,1 @@
+jako model 5, ale s více samples pro left a right

@@ -3,7 +3,11 @@ import React, { useRef } from 'react';
 //import Canvas from './modelCanvas/Canvas';
 import Puzzle from './modelPuzzle/Puzzle';
 
-const URL = "https://teachablemachine.withgoogle.com/models/j1Ti1eTk2/",
+const URL = // model1:  "https://teachablemachine.withgoogle.com/models/j1Ti1eTk2/",
+            // model2:  "https://teachablemachine.withgoogle.com/models/ukdFni6yK/",
+            // model3:  "https://teachablemachine.withgoogle.com/models/qz1fdqaVZ/",
+            // model4:  "https://teachablemachine.withgoogle.com/models/OytAvKTzJE/",
+                        "https://teachablemachine.withgoogle.com/models/JaJKSjSyx/",
       modelFile = "model.json",
       metadataFile = "metadata.json",
       buttonName = "initButton",
@@ -13,7 +17,7 @@ const URL = "https://teachablemachine.withgoogle.com/models/j1Ti1eTk2/",
       webcamHeight = 343,
       labelName = "labelContainer",
       loadingText = "Načítání...",
-      probabilityThreshold = 0.6,
+      probabilityThreshold = 0.5,
       counterThreshold = 10,
       width = 501,
       height = 501,
